@@ -30,6 +30,13 @@ export class Exercicio02Component {
       "bio": "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
   ];  
 
+  id: number = 0;
+  showAll: boolean = false;
+  showUpdateFields: boolean = false;
+  newName: string = '';
+  newBio: string = '';
+  result: string = '';
+
   // Funções com o paradgima funcional:
 
   /**
@@ -47,7 +54,7 @@ export class Exercicio02Component {
    * @param id - o ID da pessoa
    * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
    */
-  getNameFunctional(id:number): string {
+  getNameFunctional(id: number): string {
     const item = this.list.find(item=> item.id===id);
     return item ? item.name: "ID não encontrado";
   }
@@ -79,66 +86,108 @@ export class Exercicio02Component {
     });
   }
 
-  // Funções com o paradigma imperativo:
+  executeAction(option: string, event: Event): void {
+    const id = this.id;
 
-  /**
-   * Obtém a biografia de uma pessoa com base no ID, de forma imperativa 
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa
-   * @returns - retorna a biografia da pessoa correspondente ao ID ou então "ID não encontrado"
-   */
-  getBioImperative(list: Array<any>, id: number): string {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return list[i].bio;
-      }
-    }
-    return "ID não encontrado";
-  }
-
-  /**
-   * Obtém o nome de uma pessoa com base no ID, de forma imperativa 
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa
-   * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
-   */
-  getNameImperative(list: Array<any>, id: number): string {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return list[i].name;
-      }
-    }
-    return "ID não encontrado";
-  }
-
-  /**
-   * Exclui uma pessoa da lista com base no ID de forma imperativa
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa a ser excluída
-   */
-  deleteItemImperative(list: Array<any>, id: number): void {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        list.splice(i, 1);
-        return
-      }
+    if (option === 'showAll') {
+      this.showAll = true;
+      this.showUpdateFields = false;
+    } else if (option === 'updateItem') {
+      this.showAll = false;
+      this.showUpdateFields = true;
+    } else if (option === 'findBio') {
+      const bio = this.getBioFunctional(id);
+      this.result = bio ? `Bio encontrada: ${bio}` : "ID não encontrado";
+    } else if (option === 'findName') {
+      const bio = this.getNameFunctional(id);
+      this.result = bio ? `Nome encontrado: ${bio}` : "ID não encontrado";
+    } else if (option === 'deleteItem') {
+      this.list = this.deleteItemFunctional(this.list, id);
+      this.result = `Pessoa com ID ${id} excluída com sucesso da lista.`;
+    } else if (option === 'updateItem') {
+        this.list = this.updateItemFunctional(this.list, id, 'name', this.newName);
+        this.list = this.updateItemFunctional(this.list, id, 'bio', this.newBio);
     }
   }
 
-  /**
-   * Atualiza uma propriedade de uma pessoa na lista, com base no ID, de forma imperativa
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa a ser atualizada
-   * @param prop - a propriedade a ser atualizada - 'name' ou 'bio'
-   * @param value - o novo valor da propriedade
-   */
-  updateItemImperative(list: Array<any>, id: number, prop: string, value: string): void {
-    for (let i = 0; i <= list.length-1; ++i){
-      if (list[i].id === id) {
-        list[i][prop] = value;
-        return
-      }
+  updateItem(): void {
+    const id = this.id;
+    const newName = this.newName;
+    const newBio = this.newBio;
+
+    if (newName !== null && newName !== '') {
+        this.list = this.updateItemFunctional(this.list, id, 'name', newName);
     }
+    
+    if (newBio !== null && newBio !== '') {
+        this.list = this.updateItemFunctional(this.list, id, 'bio', newBio);
+    }
+
+    this.showAll = false;
+    this.showUpdateFields = false;
   }
 
+  
+
+//   // Funções com o paradigma imperativo:
+
+//   /**
+//    * Obtém a biografia de uma pessoa com base no ID, de forma imperativa 
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa
+//    * @returns - retorna a biografia da pessoa correspondente ao ID ou então "ID não encontrado"
+//    */
+//   getBioImperative(list: Array<any>, id: number): string {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         return list[i].bio;
+//       }
+//     }
+//     return "ID não encontrado";
+//   }
+
+//   /**
+//    * Obtém o nome de uma pessoa com base no ID, de forma imperativa 
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa
+//    * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
+//    */
+//   getNameImperative(list: Array<any>, id: number): string {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         return list[i].name;
+//       }
+//     }
+//     return "ID não encontrado";
+//   }
+
+//   /**
+//    * Exclui uma pessoa da lista com base no ID de forma imperativa
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa a ser excluída
+//    */
+//   deleteItemImperative(list: Array<any>, id: number): void {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         list.splice(i, 1);
+//         return
+//       }
+//     }
+//   }
+
+//   /**
+//    * Atualiza uma propriedade de uma pessoa na lista, com base no ID, de forma imperativa
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa a ser atualizada
+//    * @param prop - a propriedade a ser atualizada - 'name' ou 'bio'
+//    * @param value - o novo valor da propriedade
+//    */
+//   updateItemImperative(list: Array<any>, id: number, prop: string, value: string): void {
+//     for (let i = 0; i <= list.length-1; ++i){
+//       if (list[i].id === id) {
+//         list[i][prop] = value;
+//         return
+//       }
+//     }
+//   }
 }
