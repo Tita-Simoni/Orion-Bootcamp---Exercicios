@@ -5,6 +5,10 @@ import { Component } from '@angular/core';
  * Este componente permite contar o número de vogais em uma palavra fornecida pelo usuário
  */
 
+/**
+ * Novo envio para avaliação e pull request!
+ */
+
 @Component({
   selector: 'app-exercicio01',
   templateUrl: './exercicio01.component.html',
