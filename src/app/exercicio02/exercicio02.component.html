@@ -1,10 +1,8 @@
 <h2>Exercírio 02</h2>
 
 <div>
-    <h2>Menu de Ações</h2>
-
     <div>
-        <button (click)="executeAction('showAll', $event)">Mostrar todos os itens</button>
+        <button (click)="executeAction('showAll', $event)" class="btnShowItems">Mostrar todos os itens</button>
         <div *ngIf="showAll">
             <ul>
                 <li *ngFor="let item of list">
@@ -18,16 +16,16 @@
     </div>
 
     <div>
-        <h2>Inserir o ID para buscar, deletar ou alterar:</h2>
-        <input [(ngModel)]="id" type="number" placeholder="Digite o ID e depois selecione a opção abaixo:">
+        <p>Insira o ID para buscar, deletar ou alterar:</p>
+        <input class="inputID" type="number" placeholder="Digite o ID">
     </div>
 
-    <ul>
-      <button (click)="executeAction('findBio', $event)">Buscar Biografia</button>
-      <button (click)="executeAction('findName', $event)">Buscar Nome</button>
-      <button (click)="executeAction('deleteItem', $event)">Deletar Pessoa</button>
-      <button (click)="executeAction('updateItem', $event)">Atualizar Pessoa</button>
-    </ul>
+    <div class="btnOptions">
+        <button (click)="executeAction('findBio', $event)" class="btn">Buscar Biografia</button>
+        <button (click)="executeAction('findName', $event)" class="btn">Buscar Nome</button>
+        <button (click)="executeAction('deleteItem', $event)" class="btn">Deletar Pessoa</button>
+        <button (click)="executeAction('updateItem', $event)" class="btn">Atualizar Pessoa</button> 
+    </div>
 
     <div *ngIf="showUpdateFields">
         <h2>Alterar os seguintes campos:</h2>

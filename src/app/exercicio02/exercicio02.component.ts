@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 
 /**
- * Componente Angular para o Exercício 02
+ * Componente Angular para o Exercício 02 e para o Exercício 03
  * Este componente gerencia uma lista de pessoas com informações sobre elas
  */
 
 @Component({
   selector: 'app-exercicio02',
   templateUrl: './exercicio02.component.html',
-  styleUrls: ['./exercicio02.component.css']
+  styleUrls: ['../app.component.css', './exercicio02.component.css']
 })
 
 export class Exercicio02Component {
@@ -86,6 +86,11 @@ export class Exercicio02Component {
     });
   }
 
+  /**
+   * Executa uma ação com base na opção escolhida pelo usuário
+   * @param option - a opção escolhida
+   * @param event - o evento associado à ação
+   */
   executeAction(option: string, event: Event): void {
     const id = this.id;
 
@@ -110,6 +115,9 @@ export class Exercicio02Component {
     }
   }
 
+  /**
+   * Atualiza uma pessoa na lista com base nos campos de entrada
+   */
   updateItem(): void {
     const id = this.id;
     const newName = this.newName;

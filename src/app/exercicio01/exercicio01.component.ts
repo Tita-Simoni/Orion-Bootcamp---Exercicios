@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-exercicio01',
   templateUrl: './exercicio01.component.html',
-  styleUrls: ['./exercicio01.component.css']
+  styleUrls: ['./exercicio01.component.css', '../app.component.css']
 })
 
 export class Exercicio01Component {
@@ -20,16 +20,22 @@ export class Exercicio01Component {
   /**
    * O número de vogais da palavra
    */
+
   numVowels: number | undefined;
+ 
   
   /**
    * Função para contar o número de vogais da palavra inserida pelo usuário
-   */
-  countVowels(): void {
+  */
+ countVowels(): void {
+    /**
+     * Expressão para normalizar a palavra
+     */
+    const normalizeWord = this.userWord.normalize('NFD');
     /**
      * Expessão redular para encontrar todas as vogais na palavra
      */
-    const vowels = this.userWord.match(/[aeiou]/gi);
+    const vowels = normalizeWord.match(/[aeiou]/gi);
 
     /**
      * Atribui o número de vogais à variável numVowels
