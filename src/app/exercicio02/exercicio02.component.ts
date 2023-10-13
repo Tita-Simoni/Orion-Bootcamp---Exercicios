@@ -5,6 +5,10 @@ import { Component } from '@angular/core';
  * Este componente gerencia uma lista de pessoas com informações sobre elas
  */
 
+/**
+ * Novo pull request para avaliação
+ */
+
 @Component({
   selector: 'app-exercicio02',
   templateUrl: './exercicio02.component.html',
