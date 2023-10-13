@@ -28,14 +28,10 @@ export class Exercicio01Component {
    * Função para contar o número de vogais da palavra inserida pelo usuário
   */
  countVowels(): void {
-    /**
-     * Expressão para normalizar a palavra
-     */
-    const normalizeWord = this.userWord.normalize('NFD');
-    /**
+       /**
      * Expessão redular para encontrar todas as vogais na palavra
      */
-    const vowels = normalizeWord.match(/[aeiou]/gi);
+    const vowels = this.userWord.match(/[aeiou]/gi);
 
     /**
      * Atribui o número de vogais à variável numVowels
