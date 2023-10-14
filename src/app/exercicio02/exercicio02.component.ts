@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgModel } from '@angular/forms';
 
 /**
  * Componente Angular para o Exercício 02 e para o Exercício 03
@@ -92,12 +93,13 @@ export class Exercicio02Component {
    * @param event - o evento associado à ação
    */
   executeAction(option: string, event: Event): void {
+    console.log('this.id:', this.id);
     const id = this.id;
 
     if (option === 'showAll') {
       this.showAll = true;
       this.showUpdateFields = false;
-    } else if (option === 'updateItem') {
+    } else if (option === 'updateItemFields') {
       this.showAll = false;
       this.showUpdateFields = true;
     } else if (option === 'findBio') {
@@ -110,6 +112,7 @@ export class Exercicio02Component {
       this.list = this.deleteItemFunctional(this.list, id);
       this.result = `Pessoa com ID ${id} excluída com sucesso da lista.`;
     } else if (option === 'updateItem') {
+        this.showUpdateFields = true;      //      let name = (<HTMLInputElement>event.target).value; // Nome do input que foi alterado
         this.list = this.updateItemFunctional(this.list, id, 'name', this.newName);
         this.list = this.updateItemFunctional(this.list, id, 'bio', this.newBio);
     }

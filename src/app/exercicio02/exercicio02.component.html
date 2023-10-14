@@ -17,7 +17,7 @@
 
     <div>
         <p>Insira o ID para buscar, deletar ou alterar:</p>
-        <input class="inputID" type="number" placeholder="Digite o ID">
+        <input [(ngModel)]="id" class="inputID" type="number" placeholder="Digite o ID">
     </div>
 
     <div class="btnOptions">
@@ -35,8 +35,7 @@
     </div>
 
     <div *ngIf="result">
-        <p>{{ result }}</p>
-
+        <p class="result">{{ result }}</p>
     </div>
 </div>
 
