@@ -9,6 +9,12 @@ import { Component } from '@angular/core';
  * Novo pull request para avaliação
  */
 
+interface Pessoa {
+  id: number;
+  name: string;
+  bio: string;
+}
+
 @Component({
   selector: 'app-exercicio02',
   templateUrl: './exercicio02.component.html',
@@ -19,20 +25,28 @@ export class Exercicio02Component {
   /**
    * Lista de pessoas com informações como ID, nome e biografia.
    */
-  list: Array<{ id: number, name: string, bio: string }> = [
-    {"id" : 1, 
-      "name": "Ada Lovelace", 
-      "bio" : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
-    {"id" : 2, 
-      "name": "Alan Turing", 
-      "bio" : "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificial"},
-    {"id" : 3, 
-      "name": "Nikola Tesla", 
-      "bio" : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
-    {"id" : 4, 
-      "name": "Nicolau Copérnico", 
-      "bio": "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
-  ];  
+  list: Pessoa[] = [
+    {
+      id: 1, 
+      name: "Ada Lovelace", 
+      bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"
+    },
+    {
+      id : 2, 
+      name: "Alan Turing", 
+      bio : "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificial"
+    },
+    {
+      id : 3, 
+      name: "Nikola Tesla", 
+      bio : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."
+    },
+    {
+      id : 4, 
+      name: "Nicolau Copérnico", 
+      bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."
+    }
+  ];    
 
   // Funções com o paradgima funcional:
 
@@ -62,7 +76,7 @@ export class Exercicio02Component {
    * @param id - o ID da pessoa
    * @returns - retorna a lista de pessoas após a exclusão
    */
-  deleteItemFunctional(list: Array<any>, id: number): Array<any> {
+  deleteItemFunctional(list: Pessoa[], id: number): Pessoa[] {
     return list.filter(item => item.id !== id);
   }
 
@@ -74,7 +88,7 @@ export class Exercicio02Component {
    * @param value - o novo valor da propriedade
    * @returns - retorna a lista de pessoas após a atualização
    */
-  updateItemFunctional(list: Array<any>, id: number, prop: string, value: string): Array<any> {
+  updateItemFunctional(list: Pessoa[], id: number, prop: string, value: string): Pessoa[] {
     return list.map(item => {
       if (item.id === id) {
         return { ...item, [prop]: value };
