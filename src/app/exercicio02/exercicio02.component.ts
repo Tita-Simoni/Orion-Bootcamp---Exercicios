@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { NgModel } from '@angular/forms';
 
 /**
- * Componente Angular para o Exercício 02
+ * Componente Angular para o Exercício 02 e para o Exercício 03
  * Este componente gerencia uma lista de pessoas com informações sobre elas
  */
 
@@ -18,7 +19,7 @@ interface Pessoa {
 @Component({
   selector: 'app-exercicio02',
   templateUrl: './exercicio02.component.html',
-  styleUrls: ['./exercicio02.component.css']
+  styleUrls: ['../app.component.css', './exercicio02.component.css']
 })
 
 export class Exercicio02Component {
@@ -48,6 +49,13 @@ export class Exercicio02Component {
     }
   ];    
 
+  id: number = 0;
+  showAll: boolean = false;
+  showUpdateFields: boolean = false;
+  newName: string = '';
+  newBio: string = '';
+  result: string = '';
+
   // Funções com o paradgima funcional:
 
   /**
@@ -65,7 +73,7 @@ export class Exercicio02Component {
    * @param id - o ID da pessoa
    * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
    */
-  getNameFunctional(id:number): string {
+  getNameFunctional(id: number): string {
     const item = this.list.find(item=> item.id===id);
     return item ? item.name: "ID não encontrado";
   }
@@ -97,66 +105,118 @@ export class Exercicio02Component {
     });
   }
 
-  // Funções com o paradigma imperativo:
-
   /**
-   * Obtém a biografia de uma pessoa com base no ID, de forma imperativa 
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa
-   * @returns - retorna a biografia da pessoa correspondente ao ID ou então "ID não encontrado"
+   * Executa uma ação com base na opção escolhida pelo usuário
+   * @param option - a opção escolhida
+   * @param event - o evento associado à ação
    */
-  getBioImperative(list: Array<any>, id: number): string {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return list[i].bio;
-      }
-    }
-    return "ID não encontrado";
-  }
+  executeAction(option: string, event: Event): void {
+    console.log('this.id:', this.id);
+    const id = this.id;
 
-  /**
-   * Obtém o nome de uma pessoa com base no ID, de forma imperativa 
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa
-   * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
-   */
-  getNameImperative(list: Array<any>, id: number): string {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        return list[i].name;
-      }
-    }
-    return "ID não encontrado";
-  }
-
-  /**
-   * Exclui uma pessoa da lista com base no ID de forma imperativa
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa a ser excluída
-   */
-  deleteItemImperative(list: Array<any>, id: number): void {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        list.splice(i, 1);
-        return
-      }
+    if (option === 'showAll') {
+      this.showAll = true;
+      this.showUpdateFields = false;
+    } else if (option === 'updateItemFields') {
+      this.showAll = false;
+      this.showUpdateFields = true;
+    } else if (option === 'findBio') {
+      const bio = this.getBioFunctional(id);
+      this.result = bio ? `Bio encontrada: ${bio}` : "ID não encontrado";
+    } else if (option === 'findName') {
+      const bio = this.getNameFunctional(id);
+      this.result = bio ? `Nome encontrado: ${bio}` : "ID não encontrado";
+    } else if (option === 'deleteItem') {
+      this.list = this.deleteItemFunctional(this.list, id);
+      this.result = `Pessoa com ID ${id} excluída com sucesso da lista.`;
+    } else if (option === 'updateItem') {
+        this.showUpdateFields = true;      //      let name = (<HTMLInputElement>event.target).value; // Nome do input que foi alterado
+        this.list = this.updateItemFunctional(this.list, id, 'name', this.newName);
+        this.list = this.updateItemFunctional(this.list, id, 'bio', this.newBio);
     }
   }
 
   /**
-   * Atualiza uma propriedade de uma pessoa na lista, com base no ID, de forma imperativa
-   * @param list - a lista de pessoas
-   * @param id - o ID da pessoa a ser atualizada
-   * @param prop - a propriedade a ser atualizada - 'name' ou 'bio'
-   * @param value - o novo valor da propriedade
+   * Atualiza uma pessoa na lista com base nos campos de entrada
    */
-  updateItemImperative(list: Array<any>, id: number, prop: string, value: string): void {
-    for (let i = 0; i <= list.length-1; ++i){
-      if (list[i].id === id) {
-        list[i][prop] = value;
-        return
-      }
+  updateItem(): void {
+    const id = this.id;
+    const newName = this.newName;
+    const newBio = this.newBio;
+
+    if (newName !== null && newName !== '') {
+        this.list = this.updateItemFunctional(this.list, id, 'name', newName);
     }
+    
+    if (newBio !== null && newBio !== '') {
+        this.list = this.updateItemFunctional(this.list, id, 'bio', newBio);
+    }
+
+    this.showAll = false;
+    this.showUpdateFields = false;
   }
 
+  
+
+//   // Funções com o paradigma imperativo:
+
+//   /**
+//    * Obtém a biografia de uma pessoa com base no ID, de forma imperativa 
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa
+//    * @returns - retorna a biografia da pessoa correspondente ao ID ou então "ID não encontrado"
+//    */
+//   getBioImperative(list: Array<any>, id: number): string {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         return list[i].bio;
+//       }
+//     }
+//     return "ID não encontrado";
+//   }
+
+//   /**
+//    * Obtém o nome de uma pessoa com base no ID, de forma imperativa 
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa
+//    * @returns - retorna o nome da pessoa correspondente ao ID ou então "ID não encontrado"
+//    */
+//   getNameImperative(list: Array<any>, id: number): string {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         return list[i].name;
+//       }
+//     }
+//     return "ID não encontrado";
+//   }
+
+//   /**
+//    * Exclui uma pessoa da lista com base no ID de forma imperativa
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa a ser excluída
+//    */
+//   deleteItemImperative(list: Array<any>, id: number): void {
+//     for (let i = 0; i < list.length; i++) {
+//       if (list[i].id === id) {
+//         list.splice(i, 1);
+//         return
+//       }
+//     }
+//   }
+
+//   /**
+//    * Atualiza uma propriedade de uma pessoa na lista, com base no ID, de forma imperativa
+//    * @param list - a lista de pessoas
+//    * @param id - o ID da pessoa a ser atualizada
+//    * @param prop - a propriedade a ser atualizada - 'name' ou 'bio'
+//    * @param value - o novo valor da propriedade
+//    */
+//   updateItemImperative(list: Array<any>, id: number, prop: string, value: string): void {
+//     for (let i = 0; i <= list.length-1; ++i){
+//       if (list[i].id === id) {
+//         list[i][prop] = value;
+//         return
+//       }
+//     }
+//   }
 }
